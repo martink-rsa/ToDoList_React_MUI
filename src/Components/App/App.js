@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
@@ -7,7 +7,6 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
-import logo from "../../assets/images/logo.svg";
 import Header from "../Header/Header";
 import ProTip from "../ProTip/ProTip";
 import ToDoList from "../ToDosList/ToDosList";
@@ -15,25 +14,27 @@ import ProjectsList from "../ProjectsList/ProjectsList";
 import Copyright from "../Copyright/Copyright";
 import { sampleTodos, sampleProjects } from "../../sample-data";
 import TodoListAppBar from "../ToDoListAppBar/ToDoListAppBar";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
+import blue from "@material-ui/core/colors/blue";
+import red from "@material-ui/core/colors/red";
+import pink from "@material-ui/core/colors/pink";
+import { theme2 } from "../../theme";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 class App extends React.Component {
-  static projectIcons = [
-    "face",
-    "fastfood",
-    "favorite",
-    "fitness_center",
-    "home_work",
-    "local_grocery_store",
-    "menu_book",
-    "sports_esports",
-    "sports_football",
-    "work",
-  ];
   constructor(props) {
     super(props);
     this.state = {
       todos: {},
       projects: {},
+      themeMode: "dark",
+      themeColors: {
+        primaryMain: "#ffa300", // Main button colour
+        primaryDark: "#ffa300", // Highlight colour for dark mode
+
+        secondaryMain: "#ff8500", // Secondary button colour
+      },
     };
   }
 
@@ -83,6 +84,24 @@ class App extends React.Component {
     });
   };
 
+  changeThemeMode = () => {
+    console.log("Changing theme mode");
+    if (this.state.themeMode === "dark") {
+      this.setState({ themeMode: "light" });
+    } else {
+      this.setState({ themeMode: "dark" });
+    }
+  };
+
+  changeThemeColor = (newColor) => {
+    console.log("Changing theme color");
+    const themeColors = { ...this.state.themeColors };
+    themeColors.primaryMain = App.colors[newColor][400];
+    themeColors.primaryDark = App.colors[newColor]["A200"];
+    themeColors.secondaryMain = App.colors[newColor][700];
+    this.setState({ themeColors });
+  };
+
   loadSampleData = () => {
     this.setState({ todos: sampleTodos });
     this.setState({ projects: sampleProjects });
@@ -92,41 +111,97 @@ class App extends React.Component {
     this.loadSampleData();
   };
 
+  static projectIcons = [
+    "face",
+    "fastfood",
+    "favorite",
+    "fitness_center",
+    "home_work",
+    "local_grocery_store",
+    "menu_book",
+    "sports_esports",
+    "sports_football",
+    "work",
+  ];
+
+  static colors = {
+    red,
+    pink,
+  };
+
   render() {
+    const themeSettings = {
+      palette: {
+        type: this.state.themeMode,
+        primary: {
+          main: this.state.themeColors.primaryMain,
+          light: "#ffd449",
+          dark: this.state.themeColors.primaryDark,
+          contrastText: "#000000",
+        },
+        secondary: {
+          main: this.state.themeColors.secondaryMain,
+          light: "#ffb644",
+          dark: "#c55600",
+          contrastText: "#000000",
+        },
+        error: {
+          main: red.A400,
+        },
+      },
+    };
     return (
-      <Container maxWidth="sm">
-        <TodoListAppBar
-          projects={this.state.projects}
-          projectIcons={App.projectIcons}
-          deleteProject={this.deleteProject}
-          appBarTitle="To Do List"
-        />
-        <Box my={4}>
-          {/* <Header headerTitle="To Do List" /> */}
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.loadSampleData}
-          >
-            Load Demo Data
-          </Button>
-          {/* <ProTip /> */}
-          <br />
-          <br />
-          <ToDoList
-            todos={this.state.todos}
+      // <ThemeProvider theme={createMuiTheme(theme2)}>
+      <ThemeProvider theme={createMuiTheme(themeSettings)}>
+        <CssBaseline />
+        <Container maxWidth="sm">
+          <TodoListAppBar
             projects={this.state.projects}
             projectIcons={App.projectIcons}
-            setTodoCompleted={this.setTodoCompleted}
-            deleteTodo={this.deleteTodo}
-            updateTodo={this.updateTodo}
+            deleteProject={this.deleteProject}
+            appBarTitle="To Do List"
           />
-          <Copyright
-            urlText="To Do List"
-            urlLink="https://www.github.com/martink-rsa/"
-          />
-        </Box>
-      </Container>
+          <Box my={4}>
+            {/* <Header headerTitle="To Do List" /> */}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.loadSampleData}
+            >
+              Load Demo Data
+            </Button>{" "}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.changeThemeMode}
+            >
+              Change Mode
+            </Button>{" "}
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => this.changeThemeColor("red")}
+            >
+              Change Color
+            </Button>
+            {/* <ProTip /> */}
+            <br />
+            <br />
+            <ToDoList
+              todos={this.state.todos}
+              projects={this.state.projects}
+              projectIcons={App.projectIcons}
+              setTodoCompleted={this.setTodoCompleted}
+              deleteTodo={this.deleteTodo}
+              updateTodo={this.updateTodo}
+            />
+            <Copyright
+              urlText="To Do List"
+              urlLink="https://www.github.com/martink-rsa/"
+            />
+          </Box>
+        </Container>
+      </ThemeProvider>
     );
   }
 }

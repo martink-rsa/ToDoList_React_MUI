@@ -1,11 +1,14 @@
 // This is just some sample data so you don't have to think of your own!
+
+const sampleDates = [];
+
 const sampleTodos = {
   todo1: {
     title: "Todo 1",
     desc: "Clean the dishes",
     priority: 2,
     dateBegin: "01/01/2019",
-    dateEnd: "02/02/2019",
+    dateEnd: "01/02/2019",
     completed: false,
     projectKey: "project1",
   },
@@ -15,7 +18,7 @@ const sampleTodos = {
     desc: "Clean the dishes",
     priority: 1,
     dateBegin: "01/01/2019",
-    dateEnd: "02/02/2019",
+    dateEnd: "05/04/2019",
     completed: false,
     projectKey: "project2",
   },
@@ -25,7 +28,7 @@ const sampleTodos = {
     desc: "Clean the dishes",
     priority: 0,
     dateBegin: "01/01/2019",
-    dateEnd: "02/02/2019",
+    dateEnd: "01/01/2019",
     completed: true,
     projectKey: "project3",
   },
@@ -35,7 +38,7 @@ const sampleTodos = {
     desc: "Clean the dishes",
     priority: 3,
     dateBegin: "01/01/2019",
-    dateEnd: "02/02/2019",
+    dateEnd: "07/04/2019",
     completed: false,
     projectKey: "project4",
   },
@@ -45,7 +48,7 @@ const sampleTodos = {
     desc: "Clean the dishes",
     priority: 1,
     dateBegin: "01/01/2019",
-    dateEnd: "02/02/2019",
+    dateEnd: "11/10/2019",
     completed: true,
     projectKey: "project4",
   },

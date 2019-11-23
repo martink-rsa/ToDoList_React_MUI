@@ -17,6 +17,7 @@ import TransitionsModal from "../TransitionsModal/TransitionsModal";
 import ToDoSettings from "../ToDoSettings/ToDoSettings";
 import ToDoDialog from "../ToDoDialog/ToDoDialog";
 import Icon from "@material-ui/core/Icon";
+import { format } from "date-fns";
 
 class ToDo extends React.Component {
   handleChange = (event) => {
@@ -51,8 +52,8 @@ class ToDo extends React.Component {
             <span>
               {title}
               <Typography variant="caption" color="textSecondary">
-                {" "}
-                ({dateEnd})
+                {/* {` (${format(new Date(dateEnd), "dd/MM/yyyy")})`} */}
+                {` (${dateEnd})`}
               </Typography>
             </span>
           }

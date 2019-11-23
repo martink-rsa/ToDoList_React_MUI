@@ -37,7 +37,6 @@ export default function ProjectsDrawer(props) {
     ) {
       return;
     }
-
     setState({ ...state, [side]: open });
   };
 

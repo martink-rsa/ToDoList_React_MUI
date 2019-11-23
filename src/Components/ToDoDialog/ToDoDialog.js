@@ -25,6 +25,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import Icon from "@material-ui/core/Icon";
+import { format } from "date-fns";
 
 export default function ToDoDialog(props) {
   const [open, setOpen] = React.useState(false);
@@ -58,13 +59,20 @@ export default function ToDoDialog(props) {
   };
 
   const handleSelect = (event) => {
-    console.log(event);
-    console.log(event.target);
     const updatedTodo = {
       ...props.todo,
       // Match the key with the "name" property of the control
       // [event.target.name]: parseInt(event.target.value, 10),
       [event.target.name]: event.target.value,
+    };
+    props.updateTodo(index, updatedTodo);
+  };
+
+  const handleDateChange = (date) => {
+    const updatedTodo = {
+      ...props.todo,
+      // Match the key with the "name" property of the control
+      dateEnd: format(date, "MM/dd/yyyy"),
     };
     props.updateTodo(index, updatedTodo);
   };
@@ -120,7 +128,6 @@ export default function ToDoDialog(props) {
                 onChange={handleSelect}
               >
                 {Object.keys(props.projects).map((key, projectIndex) => (
-                  // <MenuItem key={key} value={projectIndex}>
                   <MenuItem key={key} value={key}>
                     <Box component="span" pr={1} my="auto">
                       <Icon>
@@ -142,8 +149,8 @@ export default function ToDoDialog(props) {
                   name="dateEnd"
                   id="todo-edit-date-end"
                   label="Due date"
-                  // value={selectedDate}
-                  // onChange={handleDateChange}
+                  value={dateEnd}
+                  onChange={handleDateChange}
                   KeyboardButtonProps={{
                     "aria-label": "change date",
                   }}
