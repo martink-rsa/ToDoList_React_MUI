@@ -4,15 +4,32 @@ import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import blue from "@material-ui/core/colors/blue";
 import red from "@material-ui/core/colors/red";
 import pink from "@material-ui/core/colors/pink";
+import purple from "@material-ui/core/colors/purple";
+import deepPurple from "@material-ui/core/colors/deepPurple";
+import indigo from "@material-ui/core/colors/indigo";
+import blue from "@material-ui/core/colors/blue";
+import lightBlue from "@material-ui/core/colors/lightBlue";
+import cyan from "@material-ui/core/colors/cyan";
+import teal from "@material-ui/core/colors/teal";
+import green from "@material-ui/core/colors/green";
+import lightGreen from "@material-ui/core/colors/lightGreen";
+import lime from "@material-ui/core/colors/lime";
+import yellow from "@material-ui/core/colors/yellow";
+import amber from "@material-ui/core/colors/amber";
+import orange from "@material-ui/core/colors/orange";
+import deepOrange from "@material-ui/core/colors/deepOrange";
+import brown from "@material-ui/core/colors/brown";
+import grey from "@material-ui/core/colors/grey";
+import blueGrey from "@material-ui/core/colors/blueGrey";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import ToDoList from "../ToDosList/ToDosList";
 import Copyright from "../Copyright/Copyright";
 import { sampleTodos, sampleProjects } from "../../sample-data";
 import TodoListAppBar from "../ToDoListAppBar/ToDoListAppBar";
 import AddToDo from "../AddToDo/AddToDo";
+import ThemeColorDialog from "../ThemeColorDialog/ThemeColorDialog";
 // import { theme2 } from "../../theme";
 import { generateId } from "../../helpers";
 
@@ -24,9 +41,10 @@ class App extends React.Component {
       projects: {},
       themeMode: "dark",
       themeColors: {
-        primaryMain: "#ffa300", // Main button colour
-        primaryDark: "#ffa300", // Highlight colour for dark mode
-        secondaryMain: "#ff8500", // Secondary button colour
+        color: "orange",
+        primaryMain: App.colors["orange"][400], // Main button colour
+        primaryDark: App.colors["orange"]["A700"], // Highlight colour for dark mode
+        secondaryMain: App.colors["orange"][700], // Secondary button colour
       },
     };
   }
@@ -113,9 +131,10 @@ class App extends React.Component {
 
   changeThemeColor = (newColor) => {
     const themeColors = { ...this.state.themeColors };
+    themeColors.color = newColor;
     themeColors.primaryMain = App.colors[newColor][400];
     themeColors.primaryDark = App.colors[newColor]["A200"];
-    themeColors.secondaryMain = App.colors[newColor][700];
+    themeColors.secondaryMain = App.colors[newColor][500];
     this.setState({ themeColors });
   };
 
@@ -142,9 +161,25 @@ class App extends React.Component {
   ];
 
   static colors = {
-    red,
     pink,
+    red,
     blue,
+    indigo,
+    purple,
+    deepPurple,
+    lightBlue,
+    cyan,
+    teal,
+    green,
+    lightGreen,
+    lime,
+    yellow,
+    amber,
+    orange,
+    deepOrange,
+    brown,
+    grey,
+    blueGrey,
   };
 
   render() {
@@ -178,6 +213,9 @@ class App extends React.Component {
           addProject={this.addProject}
           updateProject={this.updateProject}
           deleteProject={this.deleteProject}
+          currentColor={this.state.themeColors.color}
+          changeThemeColor={this.changeThemeColor}
+          themeColors={App.colors}
           appBarTitle="To Do List"
         />
         <Container maxWidth="sm">
@@ -197,13 +235,14 @@ class App extends React.Component {
             >
               Change Mode
             </Button>{" "}
-            <Button
+            <ThemeColorDialog />
+            {/*             <Button
               variant="contained"
               color="secondary"
               onClick={() => this.changeThemeColor("red")}
             >
               Change Color
-            </Button>
+            </Button> */}
             {/* <ProTip /> */}
             <br />
             <br />
