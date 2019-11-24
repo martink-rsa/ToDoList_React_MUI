@@ -1,17 +1,9 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
 import "./App.css";
 import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
-import Header from "../Header/Header";
-import ProTip from "../ProTip/ProTip";
 import ToDoList from "../ToDosList/ToDosList";
-import ProjectsList from "../ProjectsList/ProjectsList";
 import Copyright from "../Copyright/Copyright";
 import { sampleTodos, sampleProjects } from "../../sample-data";
 import TodoListAppBar from "../ToDoListAppBar/ToDoListAppBar";
@@ -137,6 +129,7 @@ class App extends React.Component {
   static colors = {
     red,
     pink,
+    blue,
   };
 
   render() {

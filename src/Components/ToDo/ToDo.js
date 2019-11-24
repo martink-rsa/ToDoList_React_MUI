@@ -1,23 +1,17 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/prefer-stateless-function */
-import React, { Fragment } from "react";
-import Button from "@material-ui/core/Button";
+import React from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import FolderIcon from "@material-ui/icons/Folder";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import Checkbox from "@material-ui/core/Checkbox";
-import TransitionsModal from "../TransitionsModal/TransitionsModal";
-import ToDoSettings from "../ToDoSettings/ToDoSettings";
-import ToDoDialog from "../ToDoDialog/ToDoDialog";
 import Icon from "@material-ui/core/Icon";
-import { format } from "date-fns";
+import ToDoDialog from "../ToDoDialog/ToDoDialog";
 
 class ToDo extends React.Component {
   handleChange = (event) => {
@@ -28,15 +22,7 @@ class ToDo extends React.Component {
   };
 
   render() {
-    const {
-      title,
-      desc,
-      priority,
-      dateBegin,
-      dateEnd,
-      completed,
-      projectKey,
-    } = this.props.todo;
+    const { title, desc, dateEnd, completed, projectKey } = this.props.todo;
 
     return (
       <ListItem divider>
