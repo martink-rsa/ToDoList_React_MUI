@@ -4,6 +4,7 @@ const sampleDates = [];
 
 const sampleTodos = {
   todo1: {
+    // id: "todo1",
     title: "Todo 1",
     desc: "Clean the dishes",
     priority: 2,
@@ -14,6 +15,7 @@ const sampleTodos = {
   },
 
   todo2: {
+    // id: "todo2",
     title: "Todo 2",
     desc: "Clean the dishes",
     priority: 1,
@@ -24,6 +26,7 @@ const sampleTodos = {
   },
 
   todo3: {
+    // id: "todo3",
     title: "Todo 3",
     desc: "Clean the dishes",
     priority: 0,
@@ -34,6 +37,7 @@ const sampleTodos = {
   },
 
   todo4: {
+    // id: "todo4",
     title: "Todo 4",
     desc: "Clean the dishes",
     priority: 3,
@@ -44,6 +48,7 @@ const sampleTodos = {
   },
 
   todo5: {
+    // id: "todo",
     title: "Todo 5",
     desc: "Clean the dishes",
     priority: 1,

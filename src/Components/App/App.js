@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import "./App.css";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
@@ -14,6 +15,7 @@ import ProjectsList from "../ProjectsList/ProjectsList";
 import Copyright from "../Copyright/Copyright";
 import { sampleTodos, sampleProjects } from "../../sample-data";
 import TodoListAppBar from "../ToDoListAppBar/ToDoListAppBar";
+import AddToDo from "../AddToDo/AddToDo";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
@@ -21,6 +23,7 @@ import red from "@material-ui/core/colors/red";
 import pink from "@material-ui/core/colors/pink";
 import { theme2 } from "../../theme";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { generateId } from "../../helpers";
 
 class App extends React.Component {
   constructor(props) {
@@ -32,7 +35,6 @@ class App extends React.Component {
       themeColors: {
         primaryMain: "#ffa300", // Main button colour
         primaryDark: "#ffa300", // Highlight colour for dark mode
-
         secondaryMain: "#ff8500", // Secondary button colour
       },
     };
@@ -49,10 +51,11 @@ class App extends React.Component {
     });
   };
 
-  deleteTodo = (key) => {
+  addTodo = (newTodo) => {
     this.setState((previousState) => {
       const tempTodos = { ...previousState.todos };
-      delete tempTodos[key];
+      const newKey = generateId("todo", 1000, 9999);
+      tempTodos[newKey] = newTodo;
       return { todos: tempTodos };
     });
   };
@@ -61,6 +64,14 @@ class App extends React.Component {
     const tempTodos = { ...this.state.todos };
     tempTodos[key] = updatedTodo;
     this.setState({ todos: tempTodos });
+  };
+
+  deleteTodo = (key) => {
+    this.setState((previousState) => {
+      const tempTodos = { ...previousState.todos };
+      delete tempTodos[key];
+      return { todos: tempTodos };
+    });
   };
 
   deleteTodosFromProject = (currProjectKey) => {
@@ -94,7 +105,6 @@ class App extends React.Component {
   };
 
   changeThemeColor = (newColor) => {
-    console.log("Changing theme color");
     const themeColors = { ...this.state.themeColors };
     themeColors.primaryMain = App.colors[newColor][400];
     themeColors.primaryDark = App.colors[newColor]["A200"];
@@ -154,13 +164,13 @@ class App extends React.Component {
       // <ThemeProvider theme={createMuiTheme(theme2)}>
       <ThemeProvider theme={createMuiTheme(themeSettings)}>
         <CssBaseline />
+        <TodoListAppBar
+          projects={this.state.projects}
+          projectIcons={App.projectIcons}
+          deleteProject={this.deleteProject}
+          appBarTitle="To Do List"
+        />
         <Container maxWidth="sm">
-          <TodoListAppBar
-            projects={this.state.projects}
-            projectIcons={App.projectIcons}
-            deleteProject={this.deleteProject}
-            appBarTitle="To Do List"
-          />
           <Box my={4}>
             {/* <Header headerTitle="To Do List" /> */}
             <Button
@@ -201,6 +211,12 @@ class App extends React.Component {
             />
           </Box>
         </Container>
+
+        <AddToDo
+          projects={this.state.projects}
+          projectIcons={App.projectIcons}
+          addTodo={this.addTodo}
+        />
       </ThemeProvider>
     );
   }

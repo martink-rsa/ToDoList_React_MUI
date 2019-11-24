@@ -10,6 +10,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MenuIcon from "@material-ui/icons/Menu";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import IconButton from "@material-ui/core/IconButton";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ProjectDialog from "../ProjectDialog/ProjectDialog";
@@ -48,8 +49,28 @@ export default function ProjectsDrawer(props) {
       // onKeyDown={toggleDrawer(side, false)}
     >
       <List>
+        <ListItem button divider>
+          <ListItemText primary="Add Project" />
+          <ListItemSecondaryAction>
+            {/* <ProjectDialog
+              // index={this.props.index}
+              projects={props.projects}
+              project={props.projects[key]}
+            /> */}
+            <IconButton
+              edge="end"
+              aria-label="add"
+              // onClick={() => props.deleteProject(key)}
+              // onClick={() => this.props.deleteTodo(this.props.index)}
+            >
+              <AddCircleIcon color="primary" />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+      </List>
+      <List>
         {Object.keys(props.projects).map((key) => (
-          <ListItem button key={key}>
+          <ListItem button key={key} divider>
             <ListItemIcon>
               <Icon>{props.projectIcons[props.projects[key].icon]}</Icon>
             </ListItemIcon>
@@ -59,6 +80,7 @@ export default function ProjectsDrawer(props) {
                 // index={this.props.index}
                 projects={props.projects}
                 project={props.projects[key]}
+                projectIcons={props.projectIcons}
               />
               <IconButton
                 edge="end"
@@ -77,9 +99,6 @@ export default function ProjectsDrawer(props) {
 
   return (
     <span>
-      {/* <Button onClick={toggleDrawer("left", true)}>
-        <MenuIcon />
-      </Button> */}
       <IconButton
         edge="start"
         className={classes.menuButton}

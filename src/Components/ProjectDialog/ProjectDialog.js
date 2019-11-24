@@ -13,6 +13,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
+import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
@@ -27,10 +28,6 @@ import {
 
 export default function ProjectDialog(props) {
   const [open, setOpen] = React.useState(false);
-  // Chad's suggestion. Implement this once you've got everything working:
-  // const { index: { index }, todo: { title, desc, dateEnd, projectId, priority } } = props;
-  // const { title, desc, dateEnd, projectId, priority } = props.todo;
-  // const { index } = props;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -65,8 +62,6 @@ export default function ProjectDialog(props) {
     props.updateTodo(index, updatedTodo); */
   };
 
-  const testFunc = () => {};
-
   return (
     <span>
       <IconButton edge="end" onClick={handleClickOpen}>
@@ -77,7 +72,6 @@ export default function ProjectDialog(props) {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        {/* <form noValidate autoComplete="off" onSubmit={() => handleSubmit}> */}
         <form onSubmit={handleSubmit}>
           <DialogTitle id="form-dialog-title" align="center">
             Settings
@@ -108,100 +102,26 @@ export default function ProjectDialog(props) {
                 onChange={handleChange}
               />
             </FormControl>
-            {/* <FormControl margin="normal" required fullWidth>
-              <TextField
-                required
-                id="standard-required2"
-                name="desc"
-                label="Description"
-                // className={classes.textField}
-                margin="normal"
-                value={props.project.desc}
-                onChange={handleChange}
-              />
-            </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel id="project-simple-select-label">Project</InputLabel>
               <Select
-                name="projectId"
-                labelId="project-simple-select-label"
-                id="project-simple-select"
-                value={props.todo.projectId}
+                name="icon"
+                labelId="icon-simple-select-label"
+                id="icon-simple-select"
+                value={props.project.icon}
                 onChange={handleSelect}
               >
-                {Object.keys(props.projects).map((key, projectIndex) => (
-                  <MenuItem key={key} value={projectIndex}>
+                {Object.keys(props.projectIcons).map((key, iconIndex) => (
+                  <MenuItem key={key} value={iconIndex}>
                     <Box component="span" pr={1} my="auto">
-                      <ProjectIcon
-                        project={
-                          props.projects[
-                            Object.keys(props.projects)[projectIndex]
-                          ]
-                        }
-                      />
+                      <Icon>{props.projectIcons[iconIndex]}</Icon>
                     </Box>
-                    {props.projects[key].title}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
-            <FormControl margin="normal" fullWidth>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  name="dateEnd"
-                  id="todo-edit-date-end"
-                  label="Due date"
-                  // value={selectedDate}
-                  // onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
-                />
-              </MuiPickersUtilsProvider>
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel id="priority-simple-select-label">
-                Priority
-              </InputLabel>
-              <Select
-                labelId="priority-simple-select-label"
-                id="priority-simple-select"
-                name="priority"
-                // onChange={event => handlePriorityChange(event)}
-                value={priority}
-                onChange={handleSelect}
-              >
-                <MenuItem value={0} name="stars0">
-                  <StarBorderIcon />
-                  <StarBorderIcon />
-                  <StarBorderIcon />
-                </MenuItem>
-                <MenuItem value={1} name="stars1">
-                  <StarIcon />
-                  <StarBorderIcon />
-                  <StarBorderIcon />
-                </MenuItem>
-                <MenuItem value={2} name="stars2">
-                  <StarIcon />
-                  <StarIcon />
-                  <StarBorderIcon />
-                </MenuItem>
-                <MenuItem value={3} name="stars3">
-                  <StarIcon />
-                  <StarIcon />
-                  <StarIcon />
-                </MenuItem>
-              </Select>
-            </FormControl> */}
           </DialogContent>
           <DialogActions>
-            {/* <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button> */}
             <Button
               type="submit"
               fullWidth
