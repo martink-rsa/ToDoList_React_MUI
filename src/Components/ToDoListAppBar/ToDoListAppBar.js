@@ -28,6 +28,8 @@ export default function TodoListAppBar(props) {
           <ProjectsDrawer
             projects={props.projects}
             projectIcons={props.projectIcons}
+            addProject={props.addProject}
+            updateProject={props.updateProject}
             deleteProject={props.deleteProject}
           />
           <Typography variant="h6" className={classes.title}>

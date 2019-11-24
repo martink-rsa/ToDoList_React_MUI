@@ -78,6 +78,21 @@ class App extends React.Component {
     });
   };
 
+  addProject = (newProject) => {
+    this.setState((previousState) => {
+      const tempProjects = { ...previousState.projects };
+      const newKey = generateId("proj", 1000, 9999);
+      tempProjects[newKey] = newProject;
+      return { projects: tempProjects };
+    });
+  };
+
+  updateProject = (key, updatedProject) => {
+    const tempProjects = { ...this.state.projects };
+    tempProjects[key] = updatedProject;
+    this.setState({ projects: tempProjects });
+  };
+
   deleteProject = (key) => {
     this.deleteTodosFromProject(key);
     this.setState((previousState) => {
@@ -160,6 +175,8 @@ class App extends React.Component {
         <TodoListAppBar
           projects={this.state.projects}
           projectIcons={App.projectIcons}
+          addProject={this.addProject}
+          updateProject={this.updateProject}
           deleteProject={this.deleteProject}
           appBarTitle="To Do List"
         />

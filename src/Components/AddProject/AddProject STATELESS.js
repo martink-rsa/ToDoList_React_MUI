@@ -14,7 +14,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
 
-export default function ProjectDialog(props) {
+export default function(props) {
   const [open, setOpen] = React.useState(false);
   const { title, desc, icon } = props.project;
 

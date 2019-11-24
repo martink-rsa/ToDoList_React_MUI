@@ -8,10 +8,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MenuIcon from "@material-ui/icons/Menu";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
 import IconButton from "@material-ui/core/IconButton";
+import Divider from "@material-ui/core/Divider";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ProjectDialog from "../ProjectDialog/ProjectDialog";
+import AddProject from "../AddProject/AddProject";
 
 const useStyles = makeStyles({
   list: {
@@ -46,35 +47,35 @@ export default function ProjectsDrawer(props) {
       // onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        <ListItem button divider>
+        <ListItem button>
           <ListItemText primary="Add Project" />
           <ListItemSecondaryAction>
-            {/* <ProjectDialog
-              // index={this.props.index}
-              projects={props.projects}
-              project={props.projects[key]}
-            /> */}
-            <IconButton
-              edge="end"
-              aria-label="add"
-              // onClick={() => props.deleteProject(key)}
-              // onClick={() => this.props.deleteTodo(this.props.index)}
-            >
+            {/*             <IconButton edge="end" aria-label="add">
               <AddCircleIcon color="primary" />
-            </IconButton>
+            </IconButton> */}
+            <AddProject
+              projectIcons={props.projectIcons}
+              addProject={props.addProject}
+            />
           </ListItemSecondaryAction>
         </ListItem>
       </List>
+      <Divider />
       <List>
         {Object.keys(props.projects).map((key) => (
           <ListItem button key={key} divider>
             <ListItemIcon>
               <Icon>{props.projectIcons[props.projects[key].icon]}</Icon>
             </ListItemIcon>
-            <ListItemText primary={props.projects[key].title} />
+            <ListItemText
+              primary={props.projects[key].title}
+              secondary={props.projects[key].desc}
+            />
             <ListItemSecondaryAction>
               <ProjectDialog
-                // index={this.props.index}
+                key={key}
+                index={key}
+                updateProject={props.updateProject}
                 projects={props.projects}
                 project={props.projects[key]}
                 projectIcons={props.projectIcons}

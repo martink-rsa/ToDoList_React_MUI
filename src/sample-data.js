@@ -1,7 +1,7 @@
 const sampleTodos = {
   todo1: {
-    title: "Todo 1",
-    desc: "Clean the dishes",
+    title: "Meet up with Denise",
+    desc: "Having coffee with Lily",
     priority: 2,
     dateBegin: "01/01/2019",
     dateEnd: "01/02/2019",
@@ -10,8 +10,8 @@ const sampleTodos = {
   },
 
   todo2: {
-    title: "Todo 2",
-    desc: "Clean the dishes",
+    title: "Make dinner",
+    desc: "Defrost the chicken",
     priority: 1,
     dateBegin: "01/01/2019",
     dateEnd: "05/04/2019",
@@ -20,8 +20,8 @@ const sampleTodos = {
   },
 
   todo3: {
-    title: "Todo 3",
-    desc: "Clean the dishes",
+    title: "Clean the dishes",
+    desc: "Don't forget the pots",
     priority: 0,
     dateBegin: "01/01/2019",
     dateEnd: "01/01/2019",
@@ -30,18 +30,18 @@ const sampleTodos = {
   },
 
   todo4: {
-    title: "Todo 4",
-    desc: "Clean the dishes",
+    title: "Wash clothing",
+    desc: "Use pink fabric softener",
     priority: 3,
     dateBegin: "01/01/2019",
     dateEnd: "07/04/2019",
     completed: false,
-    projectKey: "project4",
+    projectKey: "project3",
   },
 
   todo5: {
-    title: "Todo 5",
-    desc: "Clean the dishes",
+    title: "Workout",
+    desc: "Morning session",
     priority: 1,
     dateBegin: "01/01/2019",
     dateEnd: "11/10/2019",
@@ -68,7 +68,7 @@ const sampleProjects = {
   project3: {
     title: "Project 3",
     desc: "Project desc 3",
-    icon: 2,
+    icon: 4,
     color: "blue",
   },
 
