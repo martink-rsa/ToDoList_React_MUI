@@ -3,18 +3,17 @@ import "./App.css";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import blue from "@material-ui/core/colors/blue";
+import red from "@material-ui/core/colors/red";
+import pink from "@material-ui/core/colors/pink";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import ToDoList from "../ToDosList/ToDosList";
 import Copyright from "../Copyright/Copyright";
 import { sampleTodos, sampleProjects } from "../../sample-data";
 import TodoListAppBar from "../ToDoListAppBar/ToDoListAppBar";
 import AddToDo from "../AddToDo/AddToDo";
-import { ThemeProvider } from "@material-ui/core/styles";
-import { createMuiTheme } from "@material-ui/core/styles";
-import blue from "@material-ui/core/colors/blue";
-import red from "@material-ui/core/colors/red";
-import pink from "@material-ui/core/colors/pink";
-import { theme2 } from "../../theme";
-import CssBaseline from "@material-ui/core/CssBaseline";
+// import { theme2 } from "../../theme";
 import { generateId } from "../../helpers";
 
 class App extends React.Component {
@@ -73,6 +72,7 @@ class App extends React.Component {
         if (tempTodos[curr].projectKey === currProjectKey) {
           delete tempTodos[curr];
         }
+        return true;
       });
       return { todos: tempTodos };
     });
