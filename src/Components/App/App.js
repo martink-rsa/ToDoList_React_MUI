@@ -121,12 +121,12 @@ class App extends React.Component {
   };
 
   changeThemeMode = () => {
-    console.log("Changing theme mode");
-    if (this.state.themeMode === "dark") {
-      this.setState({ themeMode: "light" });
-    } else {
-      this.setState({ themeMode: "dark" });
-    }
+    this.setState((previousState) => {
+      const { themeMode } = previousState;
+      return themeMode === "dark"
+        ? { themeMode: "light" }
+        : { themeMode: "dark" };
+    });
   };
 
   changeThemeColor = (newColor) => {
@@ -204,7 +204,6 @@ class App extends React.Component {
       },
     };
     return (
-      // <ThemeProvider theme={createMuiTheme(theme2)}>
       <ThemeProvider theme={createMuiTheme(themeSettings)}>
         <CssBaseline />
         <TodoListAppBar
@@ -220,7 +219,6 @@ class App extends React.Component {
         />
         <Container maxWidth="sm">
           <Box my={4}>
-            {/* <Header headerTitle="To Do List" /> */}
             <Button
               variant="contained"
               color="primary"
@@ -236,14 +234,6 @@ class App extends React.Component {
               Change Mode
             </Button>{" "}
             <ThemeColorDialog />
-            {/*             <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => this.changeThemeColor("red")}
-            >
-              Change Color
-            </Button> */}
-            {/* <ProTip /> */}
             <br />
             <br />
             <ToDoList

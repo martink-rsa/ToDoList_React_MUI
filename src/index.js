@@ -4,16 +4,8 @@ import "./index.css";
 
 import App from "./Components/App/App";
 import * as serviceWorker from "./serviceWorker";
-// import theme from "./theme";
 
 ReactDOM.render(<App />, document.querySelector("#root"));
-/* ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <App theme={theme} />
-  </ThemeProvider>,
-  document.querySelector("#root"),
-); */
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
