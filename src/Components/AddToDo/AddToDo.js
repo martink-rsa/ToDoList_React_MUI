@@ -87,12 +87,7 @@ class AddToDo extends React.Component {
     return (
       <span>
         <div>
-          <Fab
-            color="primary"
-            aria-label="add"
-            // className={classes.fab}
-            onClick={this.handleToggle}
-          >
+          <Fab color="primary" aria-label="add" onClick={this.handleToggle}>
             <AddIcon />
           </Fab>
         </div>

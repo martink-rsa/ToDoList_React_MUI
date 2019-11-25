@@ -29,8 +29,6 @@ import Copyright from "../Copyright/Copyright";
 import { sampleTodos, sampleProjects } from "../../sample-data";
 import TodoListAppBar from "../ToDoListAppBar/ToDoListAppBar";
 import AddToDo from "../AddToDo/AddToDo";
-import ThemeColorDialog from "../ThemeColorDialog/ThemeColorDialog";
-// import { theme2 } from "../../theme";
 import { generateId } from "../../helpers";
 
 class App extends React.Component {
@@ -213,6 +211,7 @@ class App extends React.Component {
           updateProject={this.updateProject}
           deleteProject={this.deleteProject}
           currentColor={this.state.themeColors.color}
+          changeThemeMode={this.changeThemeMode}
           changeThemeColor={this.changeThemeColor}
           themeColors={App.colors}
           appBarTitle="To Do List"
@@ -226,14 +225,6 @@ class App extends React.Component {
             >
               Load Demo Data
             </Button>{" "}
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.changeThemeMode}
-            >
-              Change Mode
-            </Button>{" "}
-            <ThemeColorDialog />
             <br />
             <br />
             <ToDoList

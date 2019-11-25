@@ -20,3 +20,10 @@
 .App-link {
   color: #09d3ac;
 }
+
+.fabAdd {
+  margin: 0px;
+  right: 20px;
+  bottom: 20px;
+  background: red;
+}

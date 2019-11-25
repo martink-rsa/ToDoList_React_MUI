@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import SettingsDrawer from "../SettingsDrawer/SettingsDrawer";
 import SettingsDialog from "../SettingsDialog/SettingsDialog";
+import NightModeToggle from "../NightModeToggle/NightModeToggle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +40,7 @@ export default function TodoListAppBar(props) {
           </Typography>
           <Button color="inherit">Login</Button>
           {/* <SettingsDrawer /> */}
+          <NightModeToggle changeThemeMode={props.changeThemeMode} />
           <SettingsDialog
             currentColor={props.currentColor}
             changeThemeColor={props.changeThemeColor}
