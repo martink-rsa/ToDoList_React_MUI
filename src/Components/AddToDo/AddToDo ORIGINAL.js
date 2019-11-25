@@ -23,7 +23,6 @@ import { format } from "date-fns";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import { NativeSelect } from "@material-ui/core";
-import FormHelperText from "@material-ui/core/FormHelperText";
 
 class AddToDo extends React.Component {
   constructor(props) {
@@ -39,7 +38,6 @@ class AddToDo extends React.Component {
         completed: false,
         projectKey: "",
       },
-      hasError: false,
     };
   }
 
@@ -63,13 +61,8 @@ class AddToDo extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ hasError: false });
-    if (!this.state.todo.projectKey) {
-      this.setState({ hasError: true });
-    } else {
-      this.props.addTodo(this.state.todo);
-      this.handleToggle();
-    }
+    this.props.addTodo(this.state.todo);
+    this.handleToggle();
   };
 
   handleChange = (name) => ({ target: { value } }) => {
@@ -117,7 +110,6 @@ class AddToDo extends React.Component {
       open,
       todo: { title, desc, dateEnd, priority, projectKey },
     } = this.state;
-    const { hasError } = this.state;
     return (
       <span>
         <div>
@@ -160,7 +152,7 @@ class AddToDo extends React.Component {
                   onChange={this.handleChange("desc")}
                 />
               </FormControl>
-              <FormControl margin="normal" required fullWidth error={hasError}>
+              <FormControl margin="normal" required fullWidth>
                 <InputLabel id="project-simple-select-label">
                   Project
                 </InputLabel>
@@ -186,7 +178,6 @@ class AddToDo extends React.Component {
                     </MenuItem>
                   ))}
                 </Select>
-                {hasError && <FormHelperText>This is required!</FormHelperText>}
               </FormControl>
               <FormControl margin="normal" fullWidth>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>

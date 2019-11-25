@@ -62,6 +62,10 @@ class App extends React.Component {
     this.setState((previousState) => {
       const tempTodos = { ...previousState.todos };
       const newKey = generateId("todo", 1000, 9999);
+      if (!newTodo.projectKey) {
+        console.log("CRASH IMMINENT. FIX IT!");
+        newTodo.projectKey = Object.keys(this.state.projects)[0];
+      }
       tempTodos[newKey] = newTodo;
       return { todos: tempTodos };
     });
@@ -246,6 +250,7 @@ class App extends React.Component {
           projects={this.state.projects}
           projectIcons={App.projectIcons}
           addTodo={this.addTodo}
+          projectDefault={Object.keys(this.state.projects)[0]}
         />
       </ThemeProvider>
     );

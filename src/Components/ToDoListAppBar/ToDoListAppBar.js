@@ -44,7 +44,7 @@ export default function TodoListAppBar(props) {
           <SettingsDialog
             currentColor={props.currentColor}
             changeThemeColor={props.changeThemeColor}
-            themeColors={props.themeColors}
+            // themeColors={props.themeColors}
           />
         </Toolbar>
       </AppBar>
