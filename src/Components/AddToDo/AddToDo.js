@@ -43,64 +43,64 @@ class AddToDo extends React.Component {
   }
 
   handleToggle = () => {
-    this.setState({
-      open: !this.state.open,
-    });
+    this.setState((previousState) => ({ open: !previousState.open }));
   };
 
-  handleSubmit = (event) => {
+  /*   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ hasError: false });
+    this.setState((previousState) => {
+      return {hasError: false}
+    }
     if (!this.state.todo.projectKey) {
       this.setState({ hasError: true });
     } else {
       this.props.addTodo(this.state.todo);
       this.handleToggle();
     }
+  }; */
+
+  handleSubmit = (event) => {
+    const { todo } = this.state;
+    const { projectKey } = todo;
+    const { addTodo } = this.props;
+    event.preventDefault();
+    this.setState({ hasError: false });
+    if (!projectKey) {
+      this.setState({ hasError: true });
+    } else {
+      addTodo(todo);
+      this.handleToggle();
+    }
   };
 
   handleChange = (name) => ({ target: { value } }) => {
-    this.setState({
-      todo: {
-        ...this.state.todo,
+    this.setState((previousState) => {
+      const todo = {
+        ...previousState.todo,
         [name]: value,
-      },
-    });
-  };
-
-  handleSelect = (name) => ({ target: { value } }) => {
-    this.setState({
-      todo: {
-        ...this.state.todo,
-        [name]: value,
-      },
+      };
+      return { todo };
     });
   };
 
   handleDateChange = (date) => {
-    this.setState({
-      todo: {
-        ...this.state.todo,
+    this.setState((previousState) => {
+      const todo = {
+        ...previousState.todo,
         dateEnd: format(date, "MM/dd/yyyy"),
-      },
-    });
-  };
-
-  setDefaults = () => {
-    this.setState({
-      todo: {
-        ...this.state.todo,
-        projectKey: Object.keys(this.props.projects)[0],
-      },
+      };
+      return { todo };
     });
   };
 
   render() {
     const {
-      open,
+      // eslint-disable-next-line object-curly-newline
       todo: { title, desc, dateEnd, priority, projectKey },
+      open,
+      hasError,
     } = this.state;
-    const { hasError } = this.state;
+    const { projects, projectIcons } = this.props;
     return (
       <span>
         <div>
@@ -125,7 +125,6 @@ class AddToDo extends React.Component {
                   id="standard-required1"
                   name="title"
                   label="Title"
-                  // className={classes.textField}
                   margin="normal"
                   value={title}
                   onChange={this.handleChange("title")}
@@ -137,7 +136,6 @@ class AddToDo extends React.Component {
                   id="standard-required2"
                   name="desc"
                   label="Description"
-                  // className={classes.textField}
                   margin="normal"
                   value={desc}
                   onChange={this.handleChange("desc")}
@@ -152,24 +150,20 @@ class AddToDo extends React.Component {
                   labelId="project-simple-select-label"
                   id="project-simple-select"
                   value={projectKey}
-                  onChange={this.handleSelect("projectKey")}
+                  onChange={this.handleChange("projectKey")}
                 >
-                  {Object.keys(this.props.projects).map((key, projectIndex) => (
+                  {Object.keys(projects).map((key) => (
                     <MenuItem key={key} value={key}>
                       <Box component="span" pr={1} my="auto">
-                        <Icon>
-                          {
-                            this.props.projectIcons[
-                              this.props.projects[key].icon
-                            ]
-                          }
-                        </Icon>
+                        <Icon>{projectIcons[projects[key].icon]}</Icon>
                       </Box>
-                      {this.props.projects[key].title}
+                      {projects[key].title}
                     </MenuItem>
                   ))}
                 </Select>
-                {hasError && <FormHelperText>This is required!</FormHelperText>}
+                {hasError && (
+                  <FormHelperText>A project is required.</FormHelperText>
+                )}
               </FormControl>
               <FormControl margin="normal" fullWidth>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -198,7 +192,7 @@ class AddToDo extends React.Component {
                   id="priority-simple-select"
                   name="priority"
                   value={priority}
-                  onChange={this.handleSelect("priority")}
+                  onChange={this.handleChange("priority")}
                 >
                   <MenuItem value={0} name="stars0">
                     <StarBorderIcon />
@@ -229,8 +223,6 @@ class AddToDo extends React.Component {
                 fullWidth
                 variant="contained"
                 color="primary"
-                // className={classes.submit}
-                // onClick={handleClose}
                 onSubmit={this.handleSubmit}
               >
                 Save
@@ -243,12 +235,15 @@ class AddToDo extends React.Component {
   }
 }
 
-/* AddToDo.defaultProps = {
-  projectKey: projectDefault,
-}; */
-
-/* AddToDo.propTypes = {
-  projectDefault: PropTypes.string.isRequired,
-}; */
+AddToDo.propTypes = {
+  projects: PropTypes.shape({
+    title: PropTypes.string,
+    desc: PropTypes.string,
+    icon: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
+  addTodo: PropTypes.func.isRequired,
+  projectIcons: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default AddToDo;

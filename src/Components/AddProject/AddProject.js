@@ -29,11 +29,7 @@ class AddProject extends React.Component {
   }
 
   handleToggle = () => {
-    this.setState((previousState) => {
-      const { open } = previousState;
-      const tempOpen = open;
-      return { open: !tempOpen };
-    });
+    this.setState((previousState) => ({ open: !previousState.open }));
   };
 
   handleSubmit = (event) => {
