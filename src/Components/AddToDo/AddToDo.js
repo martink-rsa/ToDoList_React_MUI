@@ -22,7 +22,6 @@ import Icon from "@material-ui/core/Icon";
 import { format } from "date-fns";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import { NativeSelect } from "@material-ui/core";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
 class AddToDo extends React.Component {
@@ -42,18 +41,6 @@ class AddToDo extends React.Component {
       hasError: false,
     };
   }
-
-  /*   componentDidMount = () => {
-    console.log("MOUNTING");
-    console.log(this.props.projects);
-    console.log(this.props.projectDefault);
-    this.setState({
-      todo: {
-        ...this.state.todo,
-        projectKey: Object.keys(this.props.projects)[0],
-      },
-    });
-  }; */
 
   handleToggle = () => {
     this.setState({
@@ -109,10 +96,6 @@ class AddToDo extends React.Component {
   };
 
   render() {
-    /* // Trying to set default but can't change state in render
-    if (!this.state.todo.productKey && !Object.keys(this.props.projects)[0]) {
-      this.setDefaults();
-    } */
     const {
       open,
       todo: { title, desc, dateEnd, priority, projectKey },

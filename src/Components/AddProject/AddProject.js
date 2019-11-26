@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -28,32 +29,28 @@ class AddProject extends React.Component {
   }
 
   handleToggle = () => {
-    this.setState({
-      open: !this.state.open,
+    this.setState((previousState) => {
+      const { open } = previousState;
+      const tempOpen = open;
+      return { open: !tempOpen };
     });
   };
 
   handleSubmit = (event) => {
+    const { addProject } = this.props;
+    const { project } = this.state;
     event.preventDefault();
-    this.props.addProject(this.state.project);
+    addProject(project);
     this.handleToggle();
   };
 
   handleChange = (name) => ({ target: { value } }) => {
-    this.setState({
-      project: {
-        ...this.state.project,
+    this.setState((previousState) => {
+      const project = {
+        ...previousState.project,
         [name]: value,
-      },
-    });
-  };
-
-  handleSelect = (name) => ({ target: { value } }) => {
-    this.setState({
-      project: {
-        ...this.state.project,
-        [name]: value,
-      },
+      };
+      return { project };
     });
   };
 
@@ -62,17 +59,10 @@ class AddProject extends React.Component {
       open,
       project: { title, desc, icon },
     } = this.state;
+    const { projectIcons } = this.props;
     return (
       <span>
         <div>
-          {/*           <Fab
-            color="primary"
-            aria-label="add"
-            // className={classes.fab}
-            onClick={this.handleToggle}
-          >
-            <AddIcon />
-          </Fab> */}
           <IconButton edge="end" aria-label="add" onClick={this.handleToggle}>
             <AddCircleIcon color="primary" />
           </IconButton>
@@ -94,7 +84,6 @@ class AddProject extends React.Component {
                   id="standard-required1"
                   name="title"
                   label="Title"
-                  // className={classes.textField}
                   margin="normal"
                   value={title}
                   onChange={this.handleChange("title")}
@@ -106,7 +95,6 @@ class AddProject extends React.Component {
                   id="standard-required2"
                   name="desc"
                   label="Description"
-                  // className={classes.textField}
                   margin="normal"
                   value={desc}
                   onChange={this.handleChange("desc")}
@@ -121,31 +109,15 @@ class AddProject extends React.Component {
                   labelId="project-simple-select-label"
                   id="project-simple-select"
                   value={icon}
-                  onChange={this.handleSelect("icon")}
+                  onChange={this.handleChange("icon")}
                 >
-                  {Object.keys(this.props.projectIcons).map(
-                    (key, iconIndex) => (
-                      <MenuItem key={key} value={iconIndex}>
-                        <Box component="span" pr={1} my="auto">
-                          <Icon>{this.props.projectIcons[iconIndex]}</Icon>
-                        </Box>
-                      </MenuItem>
-                    ),
-                  )}
-                  {/*                   {Object.keys(this.props.projects).map((key, projectIndex) => (
-                    <MenuItem key={key} value={key}>
+                  {Object.keys(projectIcons).map((key, iconIndex) => (
+                    <MenuItem key={key} value={iconIndex}>
                       <Box component="span" pr={1} my="auto">
-                        <Icon>
-                          {
-                            this.props.projectIcons[
-                              this.props.projects[key].icon
-                            ]
-                          }
-                        </Icon>
+                        <Icon>{projectIcons[iconIndex]}</Icon>
                       </Box>
-                      {this.props.projects[key].title}
                     </MenuItem>
-                  ))} */}
+                  ))}
                 </Select>
               </FormControl>
             </DialogContent>
@@ -155,8 +127,6 @@ class AddProject extends React.Component {
                 fullWidth
                 variant="contained"
                 color="primary"
-                // className={classes.submit}
-                // onClick={handleClose}
                 onSubmit={this.handleSubmit}
               >
                 Save
@@ -168,5 +138,10 @@ class AddProject extends React.Component {
     );
   }
 }
+
+AddProject.propTypes = {
+  addProject: PropTypes.func.isRequired,
+  projectIcons: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default AddProject;

@@ -63,7 +63,6 @@ class App extends React.Component {
       const tempTodos = { ...previousState.todos };
       const newKey = generateId("todo", 1000, 9999);
       if (!newTodo.projectKey) {
-        console.log("CRASH IMMINENT. FIX IT!");
         newTodo.projectKey = Object.keys(this.state.projects)[0];
       }
       tempTodos[newKey] = newTodo;
@@ -114,12 +113,14 @@ class App extends React.Component {
   };
 
   deleteProject = (key) => {
-    this.deleteTodosFromProject(key);
-    this.setState((previousState) => {
-      const tempProjects = { ...previousState.projects };
-      delete tempProjects[key];
-      return { projects: tempProjects };
-    });
+    if (Object.keys(this.state.projects).length > 1) {
+      this.deleteTodosFromProject(key);
+      this.setState((previousState) => {
+        const tempProjects = { ...previousState.projects };
+        delete tempProjects[key];
+        return { projects: tempProjects };
+      });
+    }
   };
 
   changeThemeMode = () => {
@@ -186,6 +187,9 @@ class App extends React.Component {
 
   render() {
     const themeSettings = {
+      root: {
+        background: "ff00ff",
+      },
       palette: {
         type: this.state.themeMode,
         primary: {

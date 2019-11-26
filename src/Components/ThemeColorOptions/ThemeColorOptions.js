@@ -195,6 +195,7 @@ class ThemeColorOptions extends React.Component {
             {this.props.currentColor === key ? (
               <CheckCircleIcon color="secondary" />
             ) : null}
+            {null}
           </Button>
         ))}
       </>
