@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -26,8 +27,13 @@ export default function ToDoDialog(props) {
   const [open, setOpen] = React.useState(false);
   // Chad's suggestion. Implement this once you've got everything working:
   // const { index: { index }, todo: { title, desc, dateEnd, projectId, priority } } = props;
-  const { title, desc, dateEnd, priority } = props.todo;
-  const { index } = props;
+  const {
+    todo: { title, desc, dateEnd, priority, projectKey },
+    projects,
+    index,
+    projectIcons,
+    updateTodo,
+  } = props;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,7 +56,7 @@ export default function ToDoDialog(props) {
       // Match the key with the "name" property of the control
       [event.currentTarget.name]: event.currentTarget.value,
     };
-    props.updateTodo(index, updatedTodo);
+    updateTodo(index, updatedTodo);
   };
 
   const handleSelect = (event) => {
@@ -60,7 +66,7 @@ export default function ToDoDialog(props) {
       // [event.target.name]: parseInt(event.target.value, 10),
       [event.target.name]: event.target.value,
     };
-    props.updateTodo(index, updatedTodo);
+    updateTodo(index, updatedTodo);
   };
 
   const handleDateChange = (date) => {
@@ -69,7 +75,7 @@ export default function ToDoDialog(props) {
       // Match the key with the "name" property of the control
       dateEnd: format(date, "MM/dd/yyyy"),
     };
-    props.updateTodo(index, updatedTodo);
+    updateTodo(index, updatedTodo);
   };
 
   return (
@@ -82,7 +88,6 @@ export default function ToDoDialog(props) {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        {/* <form noValidate autoComplete="off" onSubmit={() => handleSubmit}> */}
         <form onSubmit={handleSubmit}>
           <DialogTitle id="form-dialog-title" align="center">
             Settings
@@ -95,7 +100,6 @@ export default function ToDoDialog(props) {
                 id="standard-required1"
                 name="title"
                 label="Title"
-                // className={classes.textField}
                 margin="normal"
                 value={title}
                 onChange={handleChange}
@@ -107,7 +111,6 @@ export default function ToDoDialog(props) {
                 id="standard-required2"
                 name="desc"
                 label="Description"
-                // className={classes.textField}
                 margin="normal"
                 value={desc}
                 onChange={handleChange}
@@ -119,17 +122,15 @@ export default function ToDoDialog(props) {
                 name="projectKey"
                 labelId="project-simple-select-label"
                 id="project-simple-select"
-                value={props.todo.projectKey}
+                value={projectKey}
                 onChange={handleSelect}
               >
-                {Object.keys(props.projects).map((key, projectIndex) => (
+                {Object.keys(projects).map((key) => (
                   <MenuItem key={key} value={key}>
                     <Box component="span" pr={1} my="auto">
-                      <Icon>
-                        {props.projectIcons[props.projects[key].icon]}
-                      </Icon>
+                      <Icon>{projectIcons[projects[key].icon]}</Icon>
                     </Box>
-                    {props.projects[key].title}
+                    {projects[key].title}
                   </MenuItem>
                 ))}
               </Select>
@@ -187,16 +188,11 @@ export default function ToDoDialog(props) {
             </FormControl>
           </DialogContent>
           <DialogActions>
-            {/* <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button> */}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              // className={classes.submit}
-              // onClick={handleClose}
               onSubmit={handleClose}
             >
               Save
@@ -207,3 +203,23 @@ export default function ToDoDialog(props) {
     </span>
   );
 }
+
+ToDoDialog.propTypes = {
+  todo: PropTypes.shape({
+    title: PropTypes.string,
+    desc: PropTypes.string,
+    dateEnd: PropTypes.string,
+    completed: PropTypes.bool,
+    priority: PropTypes.number,
+    projectKey: PropTypes.string,
+  }).isRequired,
+  projects: PropTypes.shape({
+    title: PropTypes.string,
+    desc: PropTypes.string,
+    icon: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
+  index: PropTypes.string.isRequired,
+  projectIcons: PropTypes.arrayOf(PropTypes.string).isRequired,
+  updateTodo: PropTypes.func.isRequired,
+};

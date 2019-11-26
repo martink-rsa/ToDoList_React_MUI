@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -20,31 +21,60 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TodoListAppBar(props) {
+export default function ToDoListAppBar(props) {
   const classes = useStyles();
+
+  const {
+    projects,
+    projectIcons,
+    addProject,
+    updateProject,
+    deleteProject,
+    appBarTitle,
+    currentColor,
+    changeThemeMode,
+    changeThemeColor,
+  } = props;
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <ProjectsDrawer
-            projects={props.projects}
-            projectIcons={props.projectIcons}
-            addProject={props.addProject}
-            updateProject={props.updateProject}
-            deleteProject={props.deleteProject}
+            projects={projects}
+            projectIcons={projectIcons}
+            addProject={addProject}
+            updateProject={updateProject}
+            deleteProject={deleteProject}
           />
           <Typography variant="h6" className={classes.title}>
-            {props.appBarTitle}
+            {appBarTitle}
           </Typography>
           <Button color="inherit">Login</Button>
-          <NightModeToggle changeThemeMode={props.changeThemeMode} />
+          <NightModeToggle changeThemeMode={changeThemeMode} />
           <SettingsDialog
-            currentColor={props.currentColor}
-            changeThemeColor={props.changeThemeColor}
+            currentColor={currentColor}
+            changeThemeColor={changeThemeColor}
           />
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+
+ToDoListAppBar.propTypes = {
+  projects: PropTypes.shape({
+    title: PropTypes.string,
+    desc: PropTypes.string,
+    icon: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
+  projectIcons: PropTypes.arrayOf(PropTypes.string).isRequired,
+  appBarTitle: PropTypes.string.isRequired,
+  currentColor: PropTypes.string.isRequired,
+  addProject: PropTypes.func.isRequired,
+  updateProject: PropTypes.func.isRequired,
+  deleteProject: PropTypes.func.isRequired,
+  changeThemeMode: PropTypes.func.isRequired,
+  changeThemeColor: PropTypes.func.isRequired,
+};

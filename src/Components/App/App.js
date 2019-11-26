@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 import React from "react";
 import "./App.css";
 import Container from "@material-ui/core/Container";
@@ -27,7 +28,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import ToDoList from "../ToDosList/ToDosList";
 import Copyright from "../Copyright/Copyright";
 import { sampleTodos, sampleProjects } from "../../sample-data";
-import TodoListAppBar from "../ToDoListAppBar/ToDoListAppBar";
+import ToDoListAppBar from "../ToDoListAppBar/ToDoListAppBar";
 import AddToDo from "../AddToDo/AddToDo";
 import { generateId } from "../../helpers";
 
@@ -215,7 +216,7 @@ class App extends React.Component {
     return (
       <ThemeProvider theme={createMuiTheme(themeSettings)}>
         <CssBaseline />
-        <TodoListAppBar
+        <ToDoListAppBar
           projects={projects}
           projectIcons={App.projectIcons}
           addProject={this.addProject}

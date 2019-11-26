@@ -1,5 +1,6 @@
 import React from "react";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import red from "@material-ui/core/colors/red";
 import pink from "@material-ui/core/colors/pink";
@@ -25,7 +26,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 const primary = "400";
 const accent = "A400";
 
-const styles = (theme) => ({
+const styles = () => ({
   btnBase: {
     height: "50px",
     width: "50px",
@@ -172,17 +173,16 @@ const colorList = {
 class ThemeColorOptions extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      activeColor: "",
-    };
+    this.state = {};
   }
 
   setNewColor = (newColor) => {
-    this.props.changeThemeColor(newColor);
+    const { changeThemeColor } = this.props;
+    changeThemeColor(newColor);
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, currentColor } = this.props;
     return (
       <>
         {Object.keys(colorList).map((key) => (
@@ -192,7 +192,7 @@ class ThemeColorOptions extends React.Component {
             className={[classes.btnBase, classes[key]].join(" ")}
             onClick={() => this.setNewColor(key)}
           >
-            {this.props.currentColor === key ? (
+            {currentColor === key ? (
               <CheckCircleIcon color="secondary" />
             ) : null}
             {null}
@@ -202,5 +202,12 @@ class ThemeColorOptions extends React.Component {
     );
   }
 }
+
+ThemeColorOptions.propTypes = {
+  changeThemeColor: PropTypes.func.isRequired,
+  currentColor: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(ThemeColorOptions);
