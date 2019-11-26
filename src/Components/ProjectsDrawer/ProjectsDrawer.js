@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -28,9 +29,17 @@ export default function ProjectsDrawer(props) {
   const [state, setState] = React.useState({
     left: false,
   });
+  const {
+    projects,
+    projectIcons,
+    addProject,
+    updateProject,
+    deleteProject,
+  } = props;
 
   const toggleDrawer = (side, open) => (event) => {
     if (
+      // eslint-disable-next-line operator-linebreak
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
     ) {
@@ -39,52 +48,46 @@ export default function ProjectsDrawer(props) {
     setState({ ...state, [side]: open });
   };
 
-  const sideList = (side) => (
-    <div
-      className={classes.list}
-      role="presentation"
-      // onClick={toggleDrawer(side, false)}
-      // onKeyDown={toggleDrawer(side, false)}
-    >
+  const deletionCheck = (key) => {
+    if (Object.keys(projects).length > 1) {
+      deleteProject(key);
+    }
+  };
+
+  const sideList = () => (
+    <div className={classes.list} role="presentation">
       <List>
         <ListItem button>
           <ListItemText primary="Add Project" />
           <ListItemSecondaryAction>
-            {/*             <IconButton edge="end" aria-label="add">
-              <AddCircleIcon color="primary" />
-            </IconButton> */}
-            <AddProject
-              projectIcons={props.projectIcons}
-              addProject={props.addProject}
-            />
+            <AddProject projectIcons={projectIcons} addProject={addProject} />
           </ListItemSecondaryAction>
         </ListItem>
       </List>
       <Divider />
       <List>
-        {Object.keys(props.projects).map((key) => (
+        {Object.keys(projects).map((key) => (
           <ListItem button key={key} divider>
             <ListItemIcon>
-              <Icon>{props.projectIcons[props.projects[key].icon]}</Icon>
+              <Icon>{projectIcons[projects[key].icon]}</Icon>
             </ListItemIcon>
             <ListItemText
-              primary={props.projects[key].title}
-              secondary={props.projects[key].desc}
+              primary={projects[key].title}
+              secondary={projects[key].desc}
             />
             <ListItemSecondaryAction>
               <ProjectDialog
                 key={key}
                 index={key}
-                updateProject={props.updateProject}
-                projects={props.projects}
-                project={props.projects[key]}
-                projectIcons={props.projectIcons}
+                updateProject={updateProject}
+                projects={projects}
+                project={projects[key]}
+                projectIcons={projectIcons}
               />
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() => props.deleteProject(key)}
-                // onClick={() => this.props.deleteTodo(this.props.index)}
+                onClick={() => deletionCheck(key)}
               >
                 <DeleteIcon />
               </IconButton>
@@ -112,3 +115,16 @@ export default function ProjectsDrawer(props) {
     </span>
   );
 }
+
+ProjectsDrawer.propTypes = {
+  projects: PropTypes.shape({
+    title: PropTypes.string,
+    desc: PropTypes.string,
+    icon: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
+  addProject: PropTypes.func.isRequired,
+  updateProject: PropTypes.func.isRequired,
+  deleteProject: PropTypes.func.isRequired,
+  projectIcons: PropTypes.arrayOf(PropTypes.string).isRequired,
+};

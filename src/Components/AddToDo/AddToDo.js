@@ -46,19 +46,6 @@ class AddToDo extends React.Component {
     this.setState((previousState) => ({ open: !previousState.open }));
   };
 
-  /*   handleSubmit = (event) => {
-    event.preventDefault();
-    this.setState((previousState) => {
-      return {hasError: false}
-    }
-    if (!this.state.todo.projectKey) {
-      this.setState({ hasError: true });
-    } else {
-      this.props.addTodo(this.state.todo);
-      this.handleToggle();
-    }
-  }; */
-
   handleSubmit = (event) => {
     const { todo } = this.state;
     const { projectKey } = todo;

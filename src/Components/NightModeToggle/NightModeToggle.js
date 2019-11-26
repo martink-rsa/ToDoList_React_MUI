@@ -1,9 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import { Box, Grid } from "@material-ui/core";
 import Switch from "@material-ui/core/Switch";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
 import Brightness5Icon from "@material-ui/icons/Brightness5";
-import { Box, Grid, Paper } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +34,6 @@ export default function NightModeToggle(props) {
   const classes = useStyles();
 
   return (
-    // <Box border={1} borderColor="secondary.main" borderRadius="10%">
     <Box>
       <Grid
         container
@@ -54,3 +54,7 @@ export default function NightModeToggle(props) {
     </Box>
   );
 }
+
+NightModeToggle.propTypes = {
+  changeThemeMode: PropTypes.func.isRequired,
+};

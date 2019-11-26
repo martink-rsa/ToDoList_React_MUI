@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -7,16 +8,21 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Select from "@material-ui/core/Select";
 import Box from "@material-ui/core/Box";
-import EditIcon from "@material-ui/icons/Edit";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
 import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
 
 export default function ProjectDialog(props) {
   const [open, setOpen] = React.useState(false);
-  const { title, desc, icon } = props.project;
+  const {
+    project: { title, desc, icon },
+    index,
+    projectIcons,
+    updateProject,
+  } = props;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,19 +43,9 @@ export default function ProjectDialog(props) {
     const updatedProject = {
       ...props.project,
       // Match the key with the "name" property of the control
-      [event.currentTarget.name]: event.currentTarget.value,
-    };
-    props.updateProject(props.index, updatedProject);
-  };
-
-  const handleSelect = (event) => {
-    const updatedProject = {
-      ...props.project,
-      // Match the key with the "name" property of the control
-      // [event.target.name]: parseInt(event.target.value, 10),
       [event.target.name]: event.target.value,
     };
-    props.updateProject(props.index, updatedProject);
+    updateProject(index, updatedProject);
   };
 
   return (
@@ -74,9 +70,8 @@ export default function ProjectDialog(props) {
                 id="project-title-input"
                 name="title"
                 label="Title"
-                // className={classes.textField}
                 margin="normal"
-                value={props.project.title}
+                value={title}
                 onChange={handleChange}
               />
             </FormControl>
@@ -86,9 +81,8 @@ export default function ProjectDialog(props) {
                 id="project-desc-input"
                 name="desc"
                 label="Description"
-                // className={classes.textField}
                 margin="normal"
-                value={props.project.desc}
+                value={desc}
                 onChange={handleChange}
               />
             </FormControl>
@@ -98,13 +92,13 @@ export default function ProjectDialog(props) {
                 name="icon"
                 labelId="icon-simple-select-label"
                 id="icon-simple-select"
-                value={props.project.icon}
-                onChange={handleSelect}
+                value={icon}
+                onChange={handleChange}
               >
-                {Object.keys(props.projectIcons).map((key, iconIndex) => (
+                {Object.keys(projectIcons).map((key, iconIndex) => (
                   <MenuItem key={key} value={iconIndex}>
                     <Box component="span" pr={1} my="auto">
-                      <Icon>{props.projectIcons[iconIndex]}</Icon>
+                      <Icon>{projectIcons[iconIndex]}</Icon>
                     </Box>
                   </MenuItem>
                 ))}
@@ -112,15 +106,8 @@ export default function ProjectDialog(props) {
             </FormControl>
           </DialogContent>
           <DialogActions>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              // className={classes.submit}
-              // onSubmit={handleClose}
-            >
-              Save
+            <Button type="submit" fullWidth variant="contained" color="primary">
+              Close
             </Button>
           </DialogActions>
         </form>
@@ -128,3 +115,15 @@ export default function ProjectDialog(props) {
     </span>
   );
 }
+
+ProjectDialog.propTypes = {
+  project: PropTypes.shape({
+    title: PropTypes.string,
+    desc: PropTypes.string,
+    icon: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
+  index: PropTypes.string.isRequired,
+  projectIcons: PropTypes.arrayOf(PropTypes.string).isRequired,
+  updateProject: PropTypes.func.isRequired,
+};

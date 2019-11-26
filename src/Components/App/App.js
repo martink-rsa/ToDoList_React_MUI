@@ -40,9 +40,9 @@ class App extends React.Component {
       themeMode: "dark",
       themeColors: {
         color: "orange",
-        primaryMain: App.colors["orange"][400], // Main button colour
-        primaryDark: App.colors["orange"]["A700"], // Highlight colour for dark mode
-        secondaryMain: App.colors["orange"][700], // Secondary button colour
+        primaryMain: App.colors.orange[400], // Main button colour
+        primaryDark: App.colors.orange.A700, // Highlight colour for dark mode
+        secondaryMain: App.colors.orange[700], // Secondary button colour
       },
     };
   }
@@ -60,40 +60,39 @@ class App extends React.Component {
 
   addTodo = (newTodo) => {
     this.setState((previousState) => {
-      const tempTodos = { ...previousState.todos };
+      const todos = { ...previousState.todos };
       const newKey = generateId("todo", 1000, 9999);
-      if (!newTodo.projectKey) {
-        newTodo.projectKey = Object.keys(this.state.projects)[0];
-      }
-      tempTodos[newKey] = newTodo;
-      return { todos: tempTodos };
+      todos[newKey] = newTodo;
+      return { todos };
     });
   };
 
   updateTodo = (key, updatedTodo) => {
-    const tempTodos = { ...this.state.todos };
-    tempTodos[key] = updatedTodo;
-    this.setState({ todos: tempTodos });
+    this.setState((previousState) => {
+      const todos = { ...previousState.todos };
+      todos[key] = updatedTodo;
+      return { todos };
+    });
   };
 
   deleteTodo = (key) => {
     this.setState((previousState) => {
-      const tempTodos = { ...previousState.todos };
-      delete tempTodos[key];
-      return { todos: tempTodos };
+      const todos = { ...previousState.todos };
+      delete todos[key];
+      return { todos };
     });
   };
 
   deleteTodosFromProject = (currProjectKey) => {
     this.setState((previousState) => {
-      const tempTodos = { ...previousState.todos };
-      Object.keys(tempTodos).map((curr) => {
-        if (tempTodos[curr].projectKey === currProjectKey) {
-          delete tempTodos[curr];
+      const todos = { ...previousState.todos };
+      Object.keys(todos).map((curr) => {
+        if (todos[curr].projectKey === currProjectKey) {
+          delete todos[curr];
         }
         return true;
       });
-      return { todos: tempTodos };
+      return { todos };
     });
   };
 
@@ -107,20 +106,20 @@ class App extends React.Component {
   };
 
   updateProject = (key, updatedProject) => {
-    const tempProjects = { ...this.state.projects };
-    tempProjects[key] = updatedProject;
-    this.setState({ projects: tempProjects });
+    this.setState((previousState) => {
+      const projects = { ...previousState.projects };
+      projects[key] = updatedProject;
+      return { projects };
+    });
   };
 
   deleteProject = (key) => {
-    if (Object.keys(this.state.projects).length > 1) {
-      this.deleteTodosFromProject(key);
-      this.setState((previousState) => {
-        const tempProjects = { ...previousState.projects };
-        delete tempProjects[key];
-        return { projects: tempProjects };
-      });
-    }
+    this.deleteTodosFromProject(key);
+    this.setState((previousState) => {
+      const projects = { ...previousState.projects };
+      delete projects[key];
+      return { projects };
+    });
   };
 
   changeThemeMode = () => {
@@ -132,13 +131,16 @@ class App extends React.Component {
     });
   };
 
-  changeThemeColor = (newColor) => {
-    const themeColors = { ...this.state.themeColors };
-    themeColors.color = newColor;
-    themeColors.primaryMain = App.colors[newColor][400];
-    themeColors.primaryDark = App.colors[newColor]["A200"];
-    themeColors.secondaryMain = App.colors[newColor][500];
-    this.setState({ themeColors });
+  changeThemeColor = (color) => {
+    this.setState(() => {
+      const { colors } = App;
+      const primaryMain = colors[color]["400"];
+      const primaryDark = colors[color]["A200"];
+      const secondaryMain = colors[color]["500"];
+      return {
+        themeColors: { color, primaryMain, primaryDark, secondaryMain },
+      };
+    });
   };
 
   loadSampleData = () => {
@@ -186,20 +188,21 @@ class App extends React.Component {
   };
 
   render() {
+    const { themeMode, themeColors, todos, projects } = this.state;
     const themeSettings = {
       root: {
         background: "ff00ff",
       },
       palette: {
-        type: this.state.themeMode,
+        type: themeMode,
         primary: {
-          main: this.state.themeColors.primaryMain,
+          main: themeColors.primaryMain,
           light: "#ffd449",
-          dark: this.state.themeColors.primaryDark,
+          dark: themeColors.primaryDark,
           contrastText: "#000000",
         },
         secondary: {
-          main: this.state.themeColors.secondaryMain,
+          main: themeColors.secondaryMain,
           light: "#ffb644",
           dark: "#c55600",
           contrastText: "#000000",
@@ -213,12 +216,12 @@ class App extends React.Component {
       <ThemeProvider theme={createMuiTheme(themeSettings)}>
         <CssBaseline />
         <TodoListAppBar
-          projects={this.state.projects}
+          projects={projects}
           projectIcons={App.projectIcons}
           addProject={this.addProject}
           updateProject={this.updateProject}
           deleteProject={this.deleteProject}
-          currentColor={this.state.themeColors.color}
+          currentColor={themeColors.color}
           changeThemeMode={this.changeThemeMode}
           changeThemeColor={this.changeThemeColor}
           themeColors={App.colors}
@@ -236,8 +239,8 @@ class App extends React.Component {
             <br />
             <br />
             <ToDoList
-              todos={this.state.todos}
-              projects={this.state.projects}
+              todos={todos}
+              projects={projects}
               projectIcons={App.projectIcons}
               setTodoCompleted={this.setTodoCompleted}
               deleteTodo={this.deleteTodo}
@@ -251,10 +254,10 @@ class App extends React.Component {
         </Container>
 
         <AddToDo
-          projects={this.state.projects}
+          projects={projects}
           projectIcons={App.projectIcons}
           addTodo={this.addTodo}
-          projectDefault={Object.keys(this.state.projects)[0]}
+          projectDefault={Object.keys(projects)[0]}
         />
       </ThemeProvider>
     );
