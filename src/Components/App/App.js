@@ -31,6 +31,7 @@ import { sampleTodos, sampleProjects } from "../../sample-data";
 import ToDoListAppBar from "../ToDoListAppBar/ToDoListAppBar";
 import AddToDo from "../AddToDo/AddToDo";
 import { generateId } from "../../helpers";
+import base from "../../base";
 
 class App extends React.Component {
   constructor(props) {
@@ -48,6 +49,23 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const { params } = this.props.match;
+    this.projects = base.syncState(`${params.listId}/projects`, {
+      context: this,
+      state: "projects",
+    });
+    this.todos = base.syncState(`${params.listId}/todos`, {
+      context: this,
+      state: "todos",
+    });
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.todos);
+    base.removeBinding(this.projects);
+  }
+
   setTodoCompleted = (key) => {
     this.setState((previousState) => {
       const tempTodos = { ...previousState.todos };
@@ -59,13 +77,20 @@ class App extends React.Component {
     });
   };
 
-  addTodo = (newTodo) => {
+  /*   addTodo = (newTodo) => {
     this.setState((previousState) => {
       const todos = { ...previousState.todos };
       const newKey = generateId("todo", 1000, 9999);
       todos[newKey] = newTodo;
       return { todos };
     });
+  }; */
+
+  addTodo = (newTodo) => {
+    const todos = { ...this.state.todos };
+    const newKey = generateId("todo", 1000, 9999);
+    todos[newKey] = newTodo;
+    this.setState({ todos });
   };
 
   updateTodo = (key, updatedTodo) => {
@@ -76,12 +101,19 @@ class App extends React.Component {
     });
   };
 
-  deleteTodo = (key) => {
+  /*   deleteTodo = (key) => {
     this.setState((previousState) => {
       const todos = { ...previousState.todos };
       delete todos[key];
       return { todos };
     });
+  }; */
+
+  deleteTodo = (key) => {
+    console.log("DELETE TODO");
+    const todos = { ...this.state.todos };
+    todos[key] = null;
+    this.setState({ todos });
   };
 
   deleteTodosFromProject = (currProjectKey) => {
@@ -118,10 +150,19 @@ class App extends React.Component {
     this.deleteTodosFromProject(key);
     this.setState((previousState) => {
       const projects = { ...previousState.projects };
-      delete projects[key];
+      // delete projects[key];
+      projects[key] = null;
       return { projects };
     });
   };
+
+  /*   deleteProject = (key) => {
+    this.deleteTodosFromProject(key);
+    const projects = { ...this.state.projects };
+    // delete projects[key];
+    projects[key] = null;
+    this.setState({ projects });
+  }; */
 
   changeThemeMode = () => {
     this.setState((previousState) => {
@@ -149,9 +190,9 @@ class App extends React.Component {
     this.setState({ projects: sampleProjects });
   };
 
-  componentDidMount = () => {
+  /*   componentDidMount = () => {
     this.loadSampleData();
-  };
+  }; */
 
   static projectIcons = [
     "face",

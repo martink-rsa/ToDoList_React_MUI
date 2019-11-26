@@ -30,7 +30,14 @@ export default function ToDo(props) {
     <ListItem divider>
       <ListItemAvatar>
         <Avatar>
-          <Icon>{projectIcons[projects[projectKey].icon]}</Icon>
+          {/* <Icon>{projectIcons[0]}</Icon> */}
+          {console.log(projects[projectKey])}
+          {projects[projectKey] !== undefined ? (
+            <Icon>{projectIcons[projects[projectKey].icon]}</Icon>
+          ) : (
+            <Icon>{projectIcons[0]}</Icon>
+          )}
+          {/* <Icon>{projectIcons[projects[projectKey].icon]}</Icon> */}
         </Avatar>
       </ListItemAvatar>
       <ListItemText
