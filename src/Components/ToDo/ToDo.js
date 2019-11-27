@@ -44,7 +44,7 @@ export default function ToDo(props) {
           primary={
             <span>
               {title}
-              <Typography variant="caption" color="textSecondary">
+              <Typography variant="caption" color="textSecondary" noWrap>
                 {` (${dateEnd})`}
               </Typography>
             </span>
@@ -56,7 +56,7 @@ export default function ToDo(props) {
           primary={
             <span>
               {title}
-              <Typography variant="caption" color="textSecondary">
+              <Typography variant="caption" color="textSecondary" noWrap>
                 {` (${dateEnd})`}
               </Typography>
             </span>
