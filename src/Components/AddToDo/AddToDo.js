@@ -90,7 +90,7 @@ class AddToDo extends React.Component {
     const { projects, projectIcons } = this.props;
     return (
       <span>
-        <div>
+        <div className="fab-container">
           <Fab color="primary" aria-label="add" onClick={this.handleToggle}>
             <AddIcon />
           </Fab>

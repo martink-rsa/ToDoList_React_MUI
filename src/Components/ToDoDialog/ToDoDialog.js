@@ -125,6 +125,7 @@ export default function ToDoDialog(props) {
                 value={projectKey}
                 onChange={handleSelect}
               >
+                {console.log(projects)}
                 {Object.keys(projects).map((key) => (
                   <MenuItem key={key} value={key}>
                     <Box component="span" pr={1} my="auto">
@@ -133,6 +134,18 @@ export default function ToDoDialog(props) {
                     {projects[key].title}
                   </MenuItem>
                 ))}
+                {/* {Object.keys(projects).map((key) => (
+                  <MenuItem key={key} value={key}>
+                    <Box component="span" pr={1} my="auto">
+                      {projects[key] !== undefined && projects[key] !== null ? (
+                        <Icon>{projectIcons[projects[key].icon]}</Icon>
+                      ) : (
+                        <Icon>{projectIcons[0]}</Icon>
+                      )}
+                    </Box>
+                    {projects[key].title}
+                  </MenuItem>
+                ))} */}
               </Select>
             </FormControl>
             <FormControl margin="normal" fullWidth>

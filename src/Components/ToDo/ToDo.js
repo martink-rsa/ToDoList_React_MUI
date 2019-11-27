@@ -30,27 +30,40 @@ export default function ToDo(props) {
     <ListItem divider>
       <ListItemAvatar>
         <Avatar>
-          {/* <Icon>{projectIcons[0]}</Icon> */}
-          {console.log(projects[projectKey])}
-          {projects[projectKey] !== undefined ? (
+          {projects[projectKey] !== undefined &&
+          projects[projectKey] !== null ? (
             <Icon>{projectIcons[projects[projectKey].icon]}</Icon>
           ) : (
             <Icon>{projectIcons[0]}</Icon>
           )}
-          {/* <Icon>{projectIcons[projects[projectKey].icon]}</Icon> */}
         </Avatar>
       </ListItemAvatar>
-      <ListItemText
-        primary={
-          <span>
-            {title}
-            <Typography variant="caption" color="textSecondary">
-              {` (${dateEnd})`}
-            </Typography>
-          </span>
-        }
-        secondary={desc}
-      />
+      {completed ? (
+        <ListItemText
+          className="Todo-completed"
+          primary={
+            <span>
+              {title}
+              <Typography variant="caption" color="textSecondary">
+                {` (${dateEnd})`}
+              </Typography>
+            </span>
+          }
+          secondary={desc}
+        />
+      ) : (
+        <ListItemText
+          primary={
+            <span>
+              {title}
+              <Typography variant="caption" color="textSecondary">
+                {` (${dateEnd})`}
+              </Typography>
+            </span>
+          }
+          secondary={desc}
+        />
+      )}
       <ListItemSecondaryAction>
         <ToDoDialog
           index={index}

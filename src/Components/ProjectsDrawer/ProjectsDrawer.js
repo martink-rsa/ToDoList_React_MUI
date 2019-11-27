@@ -110,7 +110,10 @@ export default function ProjectsDrawer(props) {
         <MenuIcon />
       </IconButton>
       <Drawer open={state.left} onClose={toggleDrawer("left", false)}>
-        {sideList("left")}
+        {console.log("-----------ProjectsDrawer")}
+        {console.log(projects)}
+
+        {sideList()}
       </Drawer>
     </span>
   );
